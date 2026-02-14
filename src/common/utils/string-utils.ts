@@ -44,6 +44,18 @@ export function stripHexPrefix(value: string): string {
 export function isValidHex(value: string): boolean {
   return /^0x[0-9a-fA-F]+$/.test(value);
 }
+/**
+ * Splits a Stacks address into groups of 4 characters for improved readability.
+ * If the last group has fewer than 4 characters, it is appended to the previous group.
+ *
+ * @param address - The Stacks address string to split
+ * @returns An array of string parts, each typically 4 characters long
+ * @example
+ * ```ts
+ * splitStxAddressIntoParts('SP2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKNRV9EJ7');
+ * // Returns: ['SP2J', '6ZY4', '8GV1', ...]
+ * ```
+ */
 export function splitStxAddressIntoParts(address: string): string[] {
   const parts: string[] = [];
   for (let i = 0; i < address.length; i += 4) {
