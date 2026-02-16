@@ -1,57 +1,60 @@
-'use client';
+// Basic usage with new features
+<Section
+  title="Asset Details"
+  subtitle="View and manage asset information"
+  icon={<FileText size={20} />}
+  badge={<Badge colorScheme="green">Active</Badge>}
+  variant="primary"
+  actions={[
+    <Button key="edit" size="sm">Edit</Button>,
+    <IconButton key="refresh" aria-label="Refresh" icon={<RefreshIcon />} size="sm" />
+  ]}
+  topRight={<Button colorScheme="blue">Create New</Button>}
+  collapsible
+  defaultCollapsed={false}
+  onToggle={(collapsed) => console.log('Section collapsed:', collapsed)}
+>
+  <YourContent />
+</Section>
 
-import { Box, Flex, FlexProps } from '@chakra-ui/react';
-import { ReactNode } from 'react';
+// With loading state
+<Section
+  title="Loading Section"
+  loading={true}
+  loadingSkeleton={<CustomSkeleton />}
+>
+  <YourContent />
+</Section>
 
-import { Text } from '../../ui/Text';
-import { Card } from './Card';
+// With empty state
+<Section
+  title="Empty Section"
+  isEmpty={true}
+  empty={<EmptyState message="No items found" />}
+>
+  <YourContent />
+</Section>
 
-interface SectionProps extends Omit<FlexProps, 'title'> {
-  title?: string | ReactNode;
-  topRight?: ReactNode;
-}
+// With sticky header and scrollable content
+<Section
+  title="Long List"
+  stickyHeader
+  headerStickyTop="60px"
+  scrollable
+  maxHeight="400px"
+>
+  <LongList />
+</Section>
 
-export function Section({
-  title,
-  topRight: TopRight = null,
-  children,
-  overflowY,
-  px = 6,
-  ...rest
-}: SectionProps) {
-  return (
-    <Card px={px} height={'fit-content'} {...rest}>
-      {title || TopRight ? (
-        <Flex
-          alignItems={'center'}
-          justifyContent="space-between"
-          borderBottom="1px solid var(--stacks-colors-border-secondary)"
-          borderTopRightRadius="xl"
-          borderTopLeftRadius="xl"
-          flexShrink={0}
-          px={6}
-          py={4}
-          mx={-px}
-          gap={4}
-          flexWrap="wrap"
-        >
-          {title ? (
-            typeof title === 'string' ? (
-              <Text color={'text'} fontWeight="medium" whiteSpace="nowrap">
-                {title}
-              </Text>
-            ) : (
-              title
-            )
-          ) : null}
-          {TopRight ? (
-            <Flex justifyContent="flex-end" alignItems="center">
-              {TopRight}
-            </Flex>
-          ) : null}
-        </Flex>
-      ) : null}
-      <Box position={'relative'}>{children}</Box>
-    </Card>
-  );
-}
+// With footer
+<Section
+  title="Form Section"
+  footer={
+    <Flex justify="flex-end" gap={2}>
+      <Button variant="ghost">Cancel</Button>
+      <Button colorScheme="blue">Save</Button>
+    </Flex>
+  }
+>
+  <FormContent />
+</Section>
